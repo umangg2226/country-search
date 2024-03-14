@@ -1,6 +1,10 @@
 import React, { useState, useMemo } from 'react'
-import SearchBox from './components/SearchBox'
-import { CountriesTable, Pagination, ErrorFallBackRoot } from './components'
+import {
+  SearchBox,
+  CountriesTable,
+  Pagination,
+  ErrorFallBackRoot,
+} from './components'
 import { useCountries, usePagination } from './hooks'
 import { shortcutMessage } from './utils'
 import { ErrorBoundary } from 'react-error-boundary'
