@@ -1,13 +1,145 @@
 body {
+  background-color: #333;
+  color: #fff;
+  font-family: Arial, sans-serif;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app {
+  max-width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #444;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+.search-container {
+  width: 30%;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: #555;
+  color: #fff;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 0.1px solid #ddd;
+  height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
+  background-color: #555;
+  color: #fff;
+  width: 33.33%;
+}
+
+img {
+  max-width: 50px;
+  max-height: 30px;
+}
+
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #aaa;
+}
+
+.spinner {
+  border: 4px solid #555;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
+}
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  margin: 0 4px;
+  border: none;
+  border-radius: 4px;
+  background-color: #555;
+  color: #fff;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #4caf50;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.sort-header {
+  cursor: pointer;
+}
+
+.sort-icon {
+  margin-left: 5px;
+  display: inline-block;
+  transition: transform 0.1s ease;
+}
+
+.sort-asc .sort-icon {
+  transform: rotate(-180deg);
+}
+
+.sort-desc .sort-icon {
+  transform: rotate(0deg);
+}
+
+.error-boundary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #333;
+  color: #fff;
 }
