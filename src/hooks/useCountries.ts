@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Country } from '../types'
 
 const BASE_URL = `https://restcountries.com/v3.1/name/`
@@ -8,6 +8,8 @@ const useCountries = (searchTerm: string) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
+  const abortControllerRef = useRef<AbortController | null>(null)
+
   const fetchCountries = useCallback(async () => {
     if (!searchTerm.trim()) {
       setCountries([])
@@ -16,8 +18,18 @@ const useCountries = (searchTerm: string) => {
 
     setIsLoading(true)
 
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort()
+    }
+
+    const abortController = new AbortController()
+
+    abortControllerRef.current = abortController
+
     try {
-      const response = await fetch(`${BASE_URL}${searchTerm.trim()}`)
+      const response = await fetch(`${BASE_URL}${searchTerm.trim()}`, {
+        signal: abortController.signal,
+      })
 
       if (!response.ok) {
         throw new Error('Failed to fetch countries')
@@ -45,14 +57,20 @@ const useCountries = (searchTerm: string) => {
     if (searchTerm.trim()) {
       debounceTimer = setTimeout(() => {
         fetchCountries()
-      }, 500)
+      }, 250)
     } else {
       setIsLoading(false)
       setIsLoaded(false)
       setCountries([])
     }
 
-    return () => clearTimeout(debounceTimer)
+    return () => {
+      clearTimeout(debounceTimer)
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort()
+        abortControllerRef.current = null
+      }
+    }
   }, [searchTerm, fetchCountries])
 
   return { countries, isLoading, isLoaded }
