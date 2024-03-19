@@ -29,6 +29,9 @@ const useCountries = (searchTerm: string) => {
     try {
       const response = await fetch(`${BASE_URL}${searchTerm.trim()}`, {
         signal: abortController.signal,
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
       })
 
       if (!response.ok) {
@@ -44,7 +47,9 @@ const useCountries = (searchTerm: string) => {
 
       setCountries(countriesData)
     } catch (error) {
-      setCountries([])
+      if ((error as Error).message !== 'The user aborted a request.') {
+        setCountries([])
+      }
     } finally {
       setIsLoading(false)
       setIsLoaded(true)
